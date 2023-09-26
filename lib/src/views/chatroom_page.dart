@@ -155,12 +155,16 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     }
   }
 
-  void _scrollToBottom() {
-    scrollController.animateTo(
+  Future<void> _scrollToBottom() async {
+    await scrollController.animateTo(
       scrollController.position.minScrollExtent,
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeOut,
     );
+    if(!showChatTopic) {
+      showChatTopic = true;
+      rebuildChatTopic.value = ! rebuildChatTopic.value;
+    }
   }
 
   void _showScrollToBottomButton() {
