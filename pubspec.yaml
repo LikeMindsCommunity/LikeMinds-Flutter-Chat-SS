@@ -70,4 +70,5 @@ flutter:
     - packages/likeminds_chat_ss_fl/assets/icons/send.svg
     - packages/likeminds_chat_ss_fl/assets/icons/copy.svg
     - packages/likeminds_chat_ss_fl/assets/icons/video.svg
+    - packages/likeminds_chat_ss_fl/assets/icons/pin.svg
 

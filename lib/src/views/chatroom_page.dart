@@ -633,19 +633,38 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                                       onTap: () {
                                                         chatBubbleController
                                                             .hideMenu();
-                                                        _chatroomActionBloc.add(
-                                                          SetChatroomTopicEvent(
-                                                            chatroomId:
-                                                                chatroom!.id,
-                                                            conversationId:
-                                                                item.id,
-                                                            topic: item,
-                                                          ),
-                                                        );
+                                                        if ((localTopic !=
+                                                                    null &&
+                                                                localTopic!
+                                                                        .id ==
+                                                                    item.id) ||
+                                                            (chatroom!.topic !=
+                                                                    null &&
+                                                                item.id ==
+                                                                    chatroom!
+                                                                        .topic!
+                                                                        .id)) {
+                                                          toast(
+                                                              "Message already pinned!");
+                                                        } else {
+                                                          _chatroomActionBloc
+                                                              .add(
+                                                            SetChatroomTopicEvent(
+                                                              chatroomId:
+                                                                  chatroom!.id,
+                                                              conversationId:
+                                                                  item.id,
+                                                              topic: item,
+                                                            ),
+                                                          );
+                                                        }
                                                       },
+                                                      leading: const LMIcon(
+                                                        type: LMIconType.svg,
+                                                        assetPath: ssPinIcon,
+                                                      ),
                                                       title: const LMTextView(
-                                                        text:
-                                                            "Set as current topic",
+                                                        text: "Pin Message",
                                                         textStyle: TextStyle(
                                                           fontSize: 14,
                                                         ),
@@ -724,8 +743,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                                       onTap: () async {
                                                         chatBubbleController
                                                             .hideMenu();
-                                                        if ((localTopic != null &&
-                                                                localTopic!.id ==
+                                                        if ((localTopic !=
+                                                                    null &&
+                                                                localTopic!
+                                                                        .id ==
                                                                     item.id) ||
                                                             (chatroom!.topic !=
                                                                     null &&
@@ -962,21 +983,38 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                                       onTap: () {
                                                         chatBubbleController
                                                             .hideMenu();
-
-                                                        _chatroomActionBloc.add(
-                                                          SetChatroomTopicEvent(
-                                                            chatroomId:
-                                                                chatroom!.id,
-                                                            conversationId:
-                                                                item.id,
-                                                            topic: item,
-                                                          ),
-                                                        );
-                                                        // tmpTopic = item;
+                                                        if ((localTopic !=
+                                                                    null &&
+                                                                localTopic!
+                                                                        .id ==
+                                                                    item.id) ||
+                                                            (chatroom!.topic !=
+                                                                    null &&
+                                                                item.id ==
+                                                                    chatroom!
+                                                                        .topic!
+                                                                        .id)) {
+                                                          toast(
+                                                              "Message already pinned!");
+                                                        } else {
+                                                          _chatroomActionBloc
+                                                              .add(
+                                                            SetChatroomTopicEvent(
+                                                              chatroomId:
+                                                                  chatroom!.id,
+                                                              conversationId:
+                                                                  item.id,
+                                                              topic: item,
+                                                            ),
+                                                          );
+                                                        }
                                                       },
+                                                      leading: const LMIcon(
+                                                        type: LMIconType.svg,
+                                                        assetPath: ssPinIcon,
+                                                      ),
                                                       title: const LMTextView(
-                                                        text:
-                                                            "Set as current topic",
+                                                        text: "Pin Message",
                                                         textStyle: TextStyle(
                                                           fontSize: 14,
                                                         ),
@@ -1090,8 +1128,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                                       onTap: () async {
                                                         chatBubbleController
                                                             .hideMenu();
-                                                        if ((localTopic != null &&
-                                                                localTopic!.id ==
+                                                        if ((localTopic !=
+                                                                    null &&
+                                                                localTopic!
+                                                                        .id ==
                                                                     item.id) ||
                                                             (chatroom!.topic !=
                                                                     null &&
@@ -1421,9 +1461,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                       ),
                                       trailing: Transform.rotate(
                                         angle: math.pi / 4,
-                                        child: const Icon(Icons.push_pin_outlined),
+                                        child:
+                                            const Icon(Icons.push_pin_outlined),
                                       ),
-                                      conversation: localTopic ?? chatroom!.topic,
+                                      conversation:
+                                          localTopic ?? chatroom!.topic,
                                       onTap: () {});
                                 } else {
                                   return const SizedBox.shrink();

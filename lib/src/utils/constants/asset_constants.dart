@@ -22,3 +22,4 @@ const String ssSelectIcon =
 const String ssAttachmentIcon =
     'packages/likeminds_chat_ss_fl/assets/icons/attachment.svg';
 const String ssSendIcon = 'packages/likeminds_chat_ss_fl/assets/icons/send.svg';
+const String ssPinIcon = 'packages/linkeminds_chat_ss_fl/assets/icons/pin.svg';
