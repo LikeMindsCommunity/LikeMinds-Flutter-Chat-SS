@@ -60,6 +60,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Map<String, List<Media>> conversationAttachmentsMeta =
       <String, List<Media>>{};
   Map<String, Conversation> conversationMeta = <String, Conversation>{};
+  Map<String, GlobalKey> conversationKey = {};
   Map<String, List<Media>> mediaFiles = <String, List<Media>>{};
   Map<int, User?> userMeta = <int, User?>{};
 
@@ -201,6 +202,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           state.getConversationResponse.conversationMeta!.isNotEmpty) {
         conversationMeta
             .addAll(state.getConversationResponse.conversationMeta!);
+        for (var element in conversationMeta.entries) {
+          conversationKey[element.key] = GlobalKey(debugLabel: element.key);
+        }
       }
 
       if (state.getConversationResponse.conversationAttachmentsMeta != null &&
@@ -437,6 +441,20 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     rebuildConversationList.value = !rebuildConversationList.value;
   }
 
+  void scrollToConversation(int id) {
+    // int? index =
+    //     pagedListController.itemList?.indexWhere((element) => element.id == id);
+    // debugPrint("jump to $index");
+    // if (index != null) {
+    //   scrollController.scrollToIndex(index: index);
+    // }
+    debugPrint(id.toString());
+    // conversationKey.forEach((key, value) {
+    //   debugPrint("$key -> ${value.toString()}");
+    // });
+    Scrollable.ensureVisible(conversationKey[id.toString()]!.currentContext!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -614,7 +632,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                 return item.userId == user!.id
                                     ? LMChatBubble(
                                         currentUser: user!,
-                                        key: Key(item.id.toString()),
+                                        key:
+                                            conversationKey[item.id.toString()],
                                         menuController: chatBubbleController,
                                         isSent: item.userId == user!.id,
                                         backgroundColor: secondary.shade500,
@@ -964,7 +983,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                                 null
                                             ? getDeletedTextWidget(item, user!)
                                             : null,
-                                        key: Key(item.id.toString()),
+                                        key:
+                                            conversationKey[item.id.toString()],
                                         isSent: item.userId == user!.id,
                                         menuController: chatBubbleController,
                                         backgroundColor: secondary.shade100,
@@ -1537,7 +1557,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                       ),
                                       conversation:
                                           localTopic ?? chatroom!.topic!,
-                                      onTap: () {});
+                                      onTap: () {
+                                        scrollToConversation(localTopic?.id ??
+                                            chatroom!.topic!.id);
+                                      });
                                 } else {
                                   return const SizedBox.shrink();
                                 }
